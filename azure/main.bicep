@@ -7,6 +7,8 @@ param awsAccessKeyId string
 @secure()
 param awsSecretAccessKey string
 
+param deploymentName string = utcNow()
+
 targetScope = 'subscription'
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -16,7 +18,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 module app 'app.bicep' = {
   scope: rg
-  name: 'app'
+  name: deploymentName
   params: {
     awsAccessKeyId: awsAccessKeyId
     awsSecretAccessKey: awsSecretAccessKey

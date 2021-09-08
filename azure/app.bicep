@@ -1,3 +1,4 @@
+@secure()
 param sqsQueueUrl string
 
 @secure()
@@ -69,7 +70,7 @@ resource sqsConnection 'Microsoft.Web/connections@2016-06-01' = {
 }
 
 resource logicApp 'Microsoft.Logic/workflows@2019-05-01' = {
-  name: 'sqs-to-servicebus'
+  name: 'logic-${uniqueString(resourceGroup().id)}'
   location: resourceGroup().location
   properties: {
     definition: {
