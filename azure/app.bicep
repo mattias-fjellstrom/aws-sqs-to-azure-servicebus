@@ -52,19 +52,10 @@ resource sqsConnection 'Microsoft.Web/connections@2016-06-01' = {
     api: {
       id: sqsApiId
     }
-    customParameterValues: {
-      accessKeyId: awsAccessKeyId
-      accessKeySecret: awsSecretAccessKey
-      queueUrl: sqsQueueUrl
-    }
     parameterValues: {
       accessKeyId: awsAccessKeyId
       accessKeySecret: awsSecretAccessKey
       queueUrl: sqsQueueUrl
-    }
-    nonSecretParameterValues: {
-      queueUrl: sqsQueueUrl
-      accessKeyId: awsAccessKeyId
     }
   }
 }
