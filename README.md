@@ -1,6 +1,6 @@
 # Send messages from AWS SQS to Azure Service Bus
 
-This example demonstrates how to send messages from an SQS queue in AWS to a Service Bus queue in Azure.
+This example demonstrates how to send messages from an SQS queue in AWS to a Service Bus queue in Azure. This is done with an Azure Logic App that is triggered by messages on an SQS queue. These messages are then forwarded to a Service Bus queue.
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ secretAccessKey=$(aws cloudformation describe-stacks \
 
 ## Deploy Azure resources
 
-Deploy a resource group, a service bus namespace and queue, and a logic app with the required connections.
+Deploy a resource group, a service bus namespace and queue, and a logic app with the required connections for SQS and Service Bus.
 
 ```bash
 az deployment sub create \
@@ -55,15 +55,15 @@ az deployment sub create \
 aws sqs send-message --queue-url $sqsUrl --message-body "This is my message"
 ```
 
-### Verify message has arrived in Service Bus queue
+### Verify that the message has arrived in Service Bus queue
 
-Unfortunately there is no support for data-plane operations using the Azure CLI, so instead do the following:
+Unfortunately there is no support for data-plane operations for Service Bus using the Azure CLI, so instead do the following:
 
 1. Go to the Azure portal
 1. Open your Service Bus namespace
 1. Click on _queues_ and open the only queue in the list
-1. Open _Service Bus Explorer_ for the queue
+1. Open the _Service Bus Explorer (preview)_ blade for the queue
 1. Click on the _Receive_ tab and then on the _Receive_ button
-1. The message is displayed below, click on it and the message content is displayed
+1. The message is displayed on the bottom of the page, click on it to see the message content
 
 ![Service Bus Explorer](./assets/azureportal.png)
