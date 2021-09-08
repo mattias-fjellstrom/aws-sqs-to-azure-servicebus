@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Resources:
+  Queue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: azure-service-bus
+
+  User:
+    Type: AWS::IAM::User
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSQSFullAccess
+
+  Credentials:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref User
+
+Outputs:
+  SqsQueueUrl:
+    Value: !Ref Queue
+
+  AccessKeyId:
+    Value: !Ref Credentials
+
+  SecretAccessKey:
+    Value: !GetAtt Credentials.SecretAccessKey
