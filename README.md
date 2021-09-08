@@ -4,9 +4,9 @@ This example demonstrates how to send messages from an SQS queue in AWS to a Ser
 
 ## Prerequisites
 
-- AWS CLI with a default profile and region configured ()
-- Azure CLI with a default subscription set ()
-- Azure Bicep CLI
+- AWS CLI with a default profile and default region configured ([install](https://aws.amazon.com/cli/))
+- Azure CLI with a default subscription set ([install](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli))
+- Azure Bicep CLI (install with `az bicep install`)
 
 ## Deploy AWS resources
 
