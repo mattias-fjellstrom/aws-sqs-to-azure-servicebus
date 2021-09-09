@@ -3,14 +3,20 @@ AWSTemplateFormatVersion: 2010-09-09
 Resources:
   Queue:
     Type: AWS::SQS::Queue
-    Properties:
-      QueueName: azure-service-bus
 
   User:
     Type: AWS::IAM::User
     Properties:
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonSQSFullAccess
+      Policies:
+        - PolicyName: SQSRead
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - sqs:ReceiveMessage
+                  - sqs:DeleteMessage
+                Resource: !GetAtt Queue.Arn
 
   Credentials:
     Type: AWS::IAM::AccessKey
