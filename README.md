@@ -40,8 +40,9 @@ secretAccessKey=$(aws cloudformation describe-stacks \
 Create a resource group, a service bus namespace and queue, and a logic app with the required connections for SQS and Service Bus.
 
 ```bash
+deploymentName=aws-sqs-to-azure-service-bus
 az deployment sub create \
-    --name my-deployment \
+    --name $deploymentName \
     --location northeurope \
     --template-file ./azure/main.bicep \
     --parameters sqsQueueUrl=$sqsUrl awsAccessKeyId=$accessKeyId awsSecretAccessKey=$secretAccessKey
@@ -70,3 +71,21 @@ Use the Azure portal to verify that the message is received in the Service Bus q
 1. The message is displayed on the bottom of the page, click on it to see the message content
 
 ![Service Bus Explorer](./assets/azureportal.png)
+
+## Delete resources
+
+Delete AWS resources.
+
+```bash
+aws cloudformation delete-stack --stack-name $stackName
+```
+
+Delete Azure resources. Note that there seems to be a delay of several minutes before the Azure subscription registers the deployment metadata. This means the first command below will not return the resource group name until this happens.
+
+```bash
+resourceGroupName=$(az deployment sub show \
+    --name $deploymentName \
+    --query 'properties.outputs.resourceGroupName.value' \
+    --output tsv)
+az group delete --name $resourceGroupName --yes --no-wait
+```

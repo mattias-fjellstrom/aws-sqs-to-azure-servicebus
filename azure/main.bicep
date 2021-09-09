@@ -25,3 +25,5 @@ module app 'app.bicep' = {
     sqsQueueUrl: sqsQueueUrl
   }
 }
+
+output resourceGroupName string = rg.name
